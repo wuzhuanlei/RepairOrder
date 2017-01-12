@@ -1,0 +1,317 @@
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.query {
+    width: auto;
+    height: 80px;
+    min-width: 800px;
+    max-width: 1500px;
+    float: inherit;
+    border: 1px solid #e6e6e6;
+}
+
+.queryPanel {
+    float: left;
+    font-size: 14px;
+    text-align: left;
+    margin: 5px;
+}
+
+.queryPanel-second {
+    float: left;
+    font-size: 14px;
+    text-align: left;
+    margin: 5px;
+}
+
+.queryPanel-second input {
+    text-align: left;
+    vertical-align: middle;
+    width: 120px;
+}
+
+.lab {
+    font-size: 13px;
+    font-family: Verdana;
+    color: black;
+    margin: 5px 0px 0px 5px;
+    text-align: right;
+}
+
+.button {
+    float: right;
+    min-width: 80px;
+    min-height: 30px;
+    vertical-align: top;
+    margin-right: 5px;
+    margin-top: -10px;
+}
+
+.queryPanel-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.queryPanel-list li {
+    position: relative;
+    font-size: 24px;
+    border-bottom: 1px solid #ededed;
+}
+
+select {
+    min-width: 120px;
+}
+
+.queryPanel input {
+    text-align: left;
+    vertical-align: middle;
+    width: 120px;
+}
+
+.queryItem {
+    margin: 2px;
+    float: left;
+}
+
+.mainData {
+    margin: 10px;
+    width: auto;
+    height: auto;
+    min-height: 500px;
+    min-width: 1000px;
+    max-width: 1500px;
+    border: 1px solid #e6e6e6;
+}
+
+.dataTable {
+    border: inset;
+    font: 80% sans-serif;
+    border-collapse: collapse;
+    empty-cells: show;
+    border: 1px solid black;
+    margin-left: 5px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dataHeader {
+    background-color: #efe;
+    color: black;
+    text-align: center;
+}
+
+.dataTable td {
+    border: 1px solid #e2e2e2;
+    padding: .5em .6em .5em 3em;
+}
+
+.dataTableRow {
+    text-align: center;
+}
+
+.menu {
+    margin-top: 5px;
+}
+
+ul.menuUl, li.menuli {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+ul.menuUl {
+    height: 31px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+li.menuli {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    text-align: center;
+    line-height: 30px;
+    background-color: #eee;
+    float: left;
+    color: black;
+    font-weight: 800;
+    margin-left: 5px;
+}
+
+li.menuli:hover {
+    height: 31px;
+    background-color: white;
+    color: #fde7d2;
+    border: 1px solid #dfdfdf;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+ul.repairOrderUl, li.repairOrderli {
+    margin-top: 15px;
+    margin-left: 10px;
+    padding: 0px;
+    list-style: none;
+    font-size: 12px;
+}
+
+ul.repairOrderUl {
+    height: 40px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+li.repairOrderli {
+    width: auto;
+    height: 25px;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    text-align: center;
+    line-height: 20px;
+    background-color: #eee;
+    float: left;
+    color: black;
+    margin-left: 2px;
+}
+
+li.repairOrderli:hover {
+    height: 25px;
+    background-color: white;
+    color: #fde7d2;
+    border: 1px solid #dfdfdf;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+.insertForm {
+    font-size: 14px;
+}
+
+.insertForm p {
+    margin-left: 60px;
+    font-size: 15px;
+    color: Black;
+    font-weight: bold;
+}
+
+.insertForm select {
+    min-width: 170px;
+}
+
+.line {
+    border: 1px solid #e6e6e6;
+}
+
+#demo-table {
+    border: inset;
+    font: 80% sans-serif;
+    background-color: #efe;
+    border-collapse: collapse;
+    empty-cells: show;
+    border: 1px solid #7a7;
+    margin-left: 10px;
+}
+
+#demo-table tr {
+    display: inherit;
+}
+
+#demo-table td {
+    text-align: left;
+    padding-right: .5em;
+}
+
+#demo-table th {
+    font-weight: bold;
+    padding-left: .4em;
+}
+
+#demo-table sup {
+    font-size: 75%;
+}
+
+#demo-table td {
+    padding: .5em .5em .5em 3em;
+}
+
+#demo-table tfoot {
+    font-weight: bold;
+}
+
+#demo-table tbody th:after {
+    content: ":";
+}
+
+#demo-table tfoot th {
+    color: blue;
+}
+
+#demo-table tfoot th:after {
+    content: ":";
+}
+
+#demo-table > tfoot td {
+    background-color: #cee;
+}
+
+.addButton {
+    float: left;
+    margin: 10px;
+}
+
+.mutileText {
+    min-width: 800px;
+}
+
+.mutileTextRemark {
+    min-width: 800px;
+    min-height: 80px;
+    vertical-align: top;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1030;
+    display: block;
+    font-size: 11px;
+    line-height: 1.4;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    visibility: visible;
+}
+
+a {
+    text-decoration: none;
+}
+
+.InsertFault {
+    background-image: url("../images/add4.png");
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 23px;
+}
+
+.fileInput {
+    border: 1px solid #7a7;
+}
+
+.icon-search {
+    background-image: url("../images/querybutton.png");
+    background-repeat: no-repeat;
+    width: 21px;
+    height: 20px;
+}
+
+.icon-popubutton {
+    background-image: url("../images/icobutton.png");
+    background-repeat: no-repeat;
+    width: 11px;
+    height: 19px;
+    padding-top: 2px;
+}
