@@ -10,6 +10,7 @@ const GET_REPAIR_ORDER_DETAIL_SUCCESS = 'GET_REPAIR_ORDER_DETAIL_SUCCESS';
 const INIT_KEYVALUEITEMS_SUCCEED = 'INIT_KEYVALUEITEMS_SUCCEED';
 const INIT_COLUMNS_SUCCEED = 'INIT_COLUMNS_SUCCEED';
 const ADD_FAULT = 'ADD_FAULT';
+const QUERY_VEHICLE_BY_PARAMETERS = 'QUERY_VEHICLE_BY_PARAMETERS';
 
 const setRoute = (route, ...parameters) => ({
     type: SET_ROUTE,
@@ -90,7 +91,8 @@ function initKeyValueItems() {
                 dispatch(initKeyValueItemsSucceed(json));
             });
     };
-};
+}
+
 
 const initKeyValueItemsSucceed = (keyValueItems) => ({
     type: INIT_KEYVALUEITEMS_SUCCEED,
@@ -107,6 +109,13 @@ const addFault = () => ({
     type: ADD_FAULT
 });
 
+
+const queryVehicleByParameters = (repairOrder) => ({
+    type: QUERY_VEHICLE_BY_PARAMETERS,
+    queryParameters: repairOrder
+});
+
+
 export default {
     SET_ROUTE,
     ADD_REPAIR_ORDER,
@@ -120,6 +129,7 @@ export default {
     INIT_KEYVALUEITEMS_SUCCEED,
     INIT_COLUMNS_SUCCEED,
     ADD_FAULT,
+    QUERY_VEHICLE_BY_PARAMETERS,
     setRoute,
     addRepairOrder,
     save,
@@ -130,5 +140,6 @@ export default {
     setRepairOrderEditItem,
     getRepairOrderDetail,
     repairOrderQuerySuccess,
-    addFault
+    addFault,
+    queryVehicleByParameters
 }

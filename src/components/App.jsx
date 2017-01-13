@@ -10,15 +10,108 @@ import UpdateRepairOrder from '../components/UpdateRepairOrder';
 import InsertRepairOrder from '../components/InsertRepairOrder';
 import {bindActionCreators} from 'redux';
 import routeNames  from '../common/routeNames';
+import 'antd/dist/antd.css';
+import {Table, Popconfirm} from 'antd';
 
 
 class App extends PureComponent {
     constructor(props) {
         super(props);
+        //noinspection JSAnnotator
+        this.state = {
+            columns: [
+                {
+                    title: '维修单编号',
+                    dataIndex: 'code',
+                    key: 'code',
+                }, {
+                    title: '车辆状态',
+                    dataIndex: 'vehicleStatus',
+                    key: 'vehicleStatus',
+                }, {
+                    title: '维修类型    ',
+                    dataIndex: 'repairType',
+                    key: 'repairType',
+                }, {
+                    title: '驳回状态    ',
+                    dataIndex: 'rejectStatus',
+                    key: 'rejectStatus',
+                }, {
+                    title: '保修时间    ',
+                    dataIndex: 'warrantyTime',
+                    key: 'warrantyTime',
+                }, {
+                    title: '行驶里程    ',
+                    dataIndex: 'drivenDistance',
+                    key: 'drivenDistance',
+                }, {
+                    title: 'VIN码    ',
+                    dataIndex: 'vin',
+                    key: 'vin',
+                }, {
+                    title: '客户名称    ',
+                    dataIndex: 'customerName',
+                    key: 'customerName',
+                }, {
+                    title: '分公司 ',
+                    dataIndex: 'branchName',
+                    key: 'branchName',
+                }, {
+                    title: '产品线 ',
+                    dataIndex: 'productLineName',
+                    key: 'productLineName',
+                }, {
+                    title: '品牌  ',
+                    dataIndex: 'brandName',
+                    key: 'brandName',
+                }, {
+                    title: '备注  ',
+                    dataIndex: 'remark',
+                    key: 'remark',
+                }, {
+                    title: '操作  ',
+                    dataIndex: 'operation',
+                    width: 100,
+                    fixed: 'right',
+                    render: (text, record) => {
+                        return (<div>
+                            <a href={`#Update/${record.id}`}>
+                                编辑
+                            </a>
+                            {' | '}
+                            <Popconfirm title="确定要删除该结算单信息吗" onConfirm={this.onDestroy}>
+                                <a href="#">删除</a>
+                            </Popconfirm>
+                        </div>)
+                    },
+                },
+            ],
+            rowSelection: {
+                onChange: (selectedRowKeys, selectedRows) => {
+                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                    if(selectedRows.length > 0)
+                        this.props.repairOrder.id = selectedRows[0].id;
+                },
+                onSelect: (record, selected, selectedRows) => {
+                    console.log(record, selected, selectedRows);
+                },
+                onSelectAll: (selected, selectedRows, changeRows) => {
+                    console.log(selected, selectedRows, changeRows);
+                },
+                getCheckboxProps: record => ({
+                    disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+                }),
+            }
 
+        };
         this.query = this.query.bind(this);
+        this.onDestroy = this.onDestroy.bind(this);
     }
 
+    'use static'
+    onDelete(repairOrder) {
+        console.log(repairOrder.id);
+    }
 
     componentDidMount() {
         const props = this.props;
@@ -37,8 +130,14 @@ class App extends PureComponent {
         this.props.query(vehiclePlate, code, outOfFactoryCode, brandName, repairType, createTime, rejectStatus, vin, branchName, status, productLine);
     }
 
+    onDestroy() {
+        console.log(this.props.repairOrder.id);
+        this.props.destroy(this.props.repairOrder);
+    }
+
 
     render() {
+        const columns = this.state.columns;
         let queryPanel = null;
         let main = null;
         let insert = null;
@@ -48,7 +147,8 @@ class App extends PureComponent {
                 insert = (<InsertRepairOrder onSubmit={this.props.addRepairOrder}
                                              repairOrder={this.props.repairOrder}
                                              onValueChange={this.props.setRepairOrderEditItem}
-                                             keyValueItems={this.props.queryPanelPage.keyValueItems}/>);
+                                             keyValueItems={this.props.queryPanelPage.keyValueItems}
+                                             onVehicleQuery={this.props.queryVehicleByParameters}/>);
                 break;
             case routeNames.REPAIR_ORDER_UPDATE_ROUTE:
                 update = (<UpdateRepairOrder onSave={this.props.save} repairOrderDetail={this.props.repairOrderDetail} onValueChange={this.props.setRepairOrderEditItem}/>);
@@ -64,31 +164,7 @@ class App extends PureComponent {
                     ), this);
                 main = (
                     <section className="main">
-                        <table className="dataTable">
-                            <thead>
-                            <tr className="dataHeader">
-                                <td>维修单编号</td>
-                                <td>车辆状态</td>
-                                <td>维修类型</td>
-                                <td>驳回状态</td>
-                                <td>保修时间</td>
-                                <td>行驶里程</td>
-                                <td>VIN码</td>
-                                <td>客户名称</td>
-                                <td>分公司</td>
-                                <td>产品线</td>
-                                <td>品牌</td>
-                                <td>二级站编号</td>
-                                <td>二级站名称</td>
-                                <td>费用合计</td>
-                                <td>工时费</td>
-                                <td>材料费</td>
-                                <td>操作</td>
-                            </tr>
-                            </thead>
-                            {dataLists}
-                        </table>
-
+                        <Table dataSource={this.props.repairOrders} columns={columns} rowSelection={this.state.rowSelection} size="small" scroll={{x: 1300}}/>
                     </section>
                 );
                 break;
@@ -112,18 +188,11 @@ const mapStateToProps = createSelector(
     state => state.getIn(['uiState', 'queryPanelPage']),
     state => state.getIn(['domainData', 'repairOrder']),
     (repairOrders, routeName, queryPanelPage, repairOrder) => {
-        let filterRepairOrders = null;
-        switch(routeName) {
-            default:
-                //查询界面所有数据
-                filterRepairOrders = repairOrders;
-                break;
-        }
         return {
             routeName,
             queryPanelPage,
             repairOrder,
-            filterRepairOrders: filterRepairOrders.toJS()
+            repairOrders: repairOrders.toJS(),
         };
     }
 );
@@ -147,7 +216,8 @@ App.propTypes = {
     setRoute: React.PropTypes.func.isRequired,
     destroy: React.PropTypes.func.isRequired,
     query: React.PropTypes.func,
-    repairOrderQuerySuccess: React.PropTypes.func
+    repairOrderQuerySuccess: React.PropTypes.func,
+    onEdit: React.PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

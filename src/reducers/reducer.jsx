@@ -10,6 +10,7 @@ function repairOrders(state, action) {
     switch(action.type) {
         case actions.ADD_REPAIR_ORDER:
             return state.push(Immutable.Map({
+                code: action.repairOrder.code,
                 id: action.repairOrder.id,
                 vehicleStatus: action.repairOrder.get('vehicleStatus'),
                 repairType: action.repairOrder.get('repairType'),
@@ -81,6 +82,11 @@ function repairOrder(state, action) {
     switch(action.type) {
         case actions.SET_REPAIRORDER_EDITITEM:
             return state.set(action.fieldName, action.fieldValue);
+        case actions.QUERY_VEHICLE_BY_PARAMETERS:
+            const repairOrders = state.getIn('repairOrders');
+            if(actions.queryParameters)
+                state = repairOrders.map(r => r.get('vin') === actions.queryParameters.get('vin') ? r : actions.queryParameters);
+            return state;
         default:
             return state;
     }
@@ -113,7 +119,7 @@ function repairOrderDetail(state, action) {
         case actions.SET_REPAIRORDER_EDITITEM:
             return state.set(action.fieldName, action.fieldValue);
         case actions.SAVE:
-            var currentRepairOrder = state.map(r => r.get('id') === action.repairOrder.id);
+            let currentRepairOrder = state.map(r => r.get('id') === action.repairOrder.id);
             if(currentRepairOrder) {
                 const editRepairOrder = action.repairOrder;
                 state = state.set('vehicleStatus', editRepairOrder.vehicleStatus);
