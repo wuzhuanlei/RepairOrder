@@ -32,45 +32,10 @@ function repairOrders(state, action) {
             break;
         case actions.DESTROY:
             return state.filter(repairOrder => repairOrder.get('id') !== action.payload.id);
-        // case actions.UPDATE_REPAIRORDER:
-        //     return state.first(repairOrder => repairOrder.get('id') === action.parameters);
         case actions.QUERY:
-            // const vehiclePlate = action.payload.vehiclePlate.trim();
-            // if(vehiclePlate)
-            //     return state.filter(repairOrder => repairOrder.get('vehiclePlate') === vehiclePlate);
-            // const code = action.payload.code.trim();
-            // if(code)
-            //     return state.filter(repairOrder => repairOrder.get('code') === code);
-            // const outOfFactoryCode = action.payload.outOfFactoryCode.trim();
-            // if(outOfFactoryCode)
-            //     return state.filter(repairOrder => repairOrder.get('outOfFactoryCode') === outOfFactoryCode);
-            // const brandName = action.payload.brandName.trim();
-            // if(brandName)
-            //     return state.filter(repairOrder => repairOrder.get('brandName') === brandName);
-            // const repairType = action.payload.repairType;
-            // if(repairType)
-            //     return Object.assign({}, state.filter(repairOrder => repairOrder.get('repairType') === repairType));
-            // return state.filter(repairOrder => repairOrder.get('repairType') === repairType);
-            // const createTime = action.payload.createTime;
-            // if(createTime)
-            //     return state.filter(repairOrder => repairOrder.get('createTime').indexOf(createTime));
-            // const rejectStatus = action.payload.rejectStatus;
-            // if(rejectStatus)
-            //     return state.filter(repairOrder => repairOrder.get('rejectStatus') === rejectStatus);
-            // const vin = action.payload.vin;
-            // if(vin)
-            //     return state.filter(repairOrder => repairOrder.get('vin') === vin);
-            // const branchName = action.payload.branchName;
-            // if(branchName)
-            //     return state.filter(repairOrder => repairOrder.get('branchName') === branchName);
-            // const status = action.payload.status;
-            // if(status)
-            //     return state.filter(repairOrder => repairOrder.get('branchName') === status);
-            // const productLine = this.state.productLine;
-            // if(productLine)
-            //     return state.filter(repairOrder => repairOrder.get('productLine') === productLine);
-            //  state = Immutable.List.of();
-            return state;
+            if(action.filter.code)
+                return state = Immutable.fromJS(action.data.filter(repairOrder => repairOrder.code === action.filter.code.trim()));
+            return state = Immutable.fromJS(action.data);
         default:
             return state;
     }
@@ -133,11 +98,25 @@ function repairOrderDetail(state, action) {
     return state;
 }
 
+function vehicleLinkMans(state, action) {
+    if(state === undefined || state === null)
+        state = Immutable.List.of();
+    switch(action.type) {
+        case actions.QUERY_VEHICLE_LINK_MANS:
+            if(action.filter.code)
+                return state = Immutable.fromJS(action.data.filter(vehicleLinkMan => vehicleLinkMan.name === action.filter.name.trim()));
+            return state = Immutable.fromJS(action.data);
+        default:
+            return state;
+    }
+
+}
+
 const domainData = combineReducers({
     repairOrders,
     repairOrder,
     repairOrderDetail,
-
+    vehicleLinkMans
 });
 
 
